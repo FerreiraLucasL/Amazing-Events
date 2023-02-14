@@ -1,17 +1,39 @@
 *{
     font-family: Helvetica;
 }
-#header{
+#nav{
+
     height: 100px;
-    width: 100%;
     background-color: black;    
 }
 #logo{
     margin: 1rem 1rem 1rem 3rem ;    
-
+    
 }
 img{
     height: 100%;
     width: 100%;
 }
 
+nav>a{    
+    Display: inline; 
+    height: 30%;    
+    padding: 2px 2px 2px 2px;    
+    text-decoration: solid;
+    font-size: 1rem;        
+}
+header{
+    width: 100%;
+    padding: 1rem 1rem 1rem 1rem;
+    background-color:grey ;
+}
+footer{
+    background-color: black;
+}
+
+footer>a{        
+    font-size: 1.5rem;  
+    
+    margin: 1rem 1rem 1rem 1rem;
+    padding: 1rem 1rem 1rem 1rem;
+}
