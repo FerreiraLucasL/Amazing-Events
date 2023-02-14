@@ -1,0 +1,17 @@
+*{
+    font-family: Helvetica;
+}
+#header{
+    height: 100px;
+    width: 100%;
+    background-color: black;    
+}
+#logo{
+    margin: 1rem 1rem 1rem 3rem ;    
+
+}
+img{
+    height: 100%;
+    width: 100%;
+}
+
