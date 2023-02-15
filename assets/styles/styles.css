@@ -1,20 +1,20 @@
 *{
     font-family: Helvetica;
+    padding: 0;
+    margin: 0;    
 }
 #nav{
-
     height: 100px;
+    width: 100%;
     background-color: black;    
 }
 #logo{
-    margin: 1rem 1rem 1rem 3rem ;    
-    
+    margin: 1rem 1rem 1rem 3rem ;        
 }
 img{
     height: 100%;
     width: 100%;
 }
-
 nav>a{    
     Display: inline; 
     height: 30%;    
@@ -24,16 +24,47 @@ nav>a{
 }
 header{
     width: 100%;
-    padding: 1rem 1rem 1rem 1rem;
-    background-color:grey ;
+    padding: 1rem 0rem 1rem 0rem;
+    color:orchid ;
 }
 footer{
     background-color: black;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
 }
 
 footer>a{        
-    font-size: 1.5rem;  
-    
+    font-size: 1.5rem;      
     margin: 1rem 1rem 1rem 1rem;
     padding: 1rem 1rem 1rem 1rem;
+}
+label{
+    margin-right: 1rem ;    
+}
+table,td{
+    border: 1px solid black;
+    padding: 2px 2px 2px 2px ;
+    margin-top: 1rem;
+}
+@media screen and (max-width:375px) {    
+    #logo{
+        margin: auto;
+    }
+    #nav{        
+        display: block;    
+    }
+    nav>a{                    
+        height: 15%;                    
+        font-size: 9px;        
+        padding: 1px 1px 1px 1px;
+        margin-left: 1px;
+    }
+    header{
+        font-size: medium;       
+    }
+    #searchBar{
+        font-size: 10px;
+    }
+
 }

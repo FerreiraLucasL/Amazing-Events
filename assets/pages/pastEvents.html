@@ -7,48 +7,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/styles/styles.css">
-    <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <title>Amazing Events</title>
 </head>
 
 <body>
-    <div class="row" id="nav">
+    <div class="row d-flex justify-content-around" id="nav">
         <div class="col-2 " id="logo">
-            <img src="./assets/img/Logo Amazing Events.png" alt="logo">
-        </div>
-        <div class="col-3"></div>
-        <nav class="col-6 d-flex d-flex justify-content-between align-items-center" id="enlaces">
-            <a href="index.html">HOME</a>
-            <a href="./assets/pages/upcomingEvents.html">Upcoming Events</a>
-            <a href="./assets/pages/pastEvents.html">Past Events</a>
-            <a href="./assets/pages/contact.html">Contact</a>
-            <a href="./assets/pages/stats.html">Stats</a>
+            <img src="../img/logo.png" alt="logo">
+        </div>        
+        <nav class="col-8 d-flex justify-content-center align-items-center" id="enlaces">
+            <a href="../../index.html">HOME</a>
+            <a href="upcomingEvents.html">Upcoming Events</a>
+            <a href="pastEvents.html">Past Events</a>
+            <a href="contact.html">Contact</a>
+            <a href="stats.html">Stats</a>
         </nav>
     </div>
     <header>
         <div class="container d-flex justify-content-center allign-items-center">
-            <h1>Past events</h1>
+            <h1>Past Events</h1>
         </div>
     </header>
-
-    <div class="row">
-        
+    <!-- search y radios-->
+    <div class="row d-flex-block m-3">
+        <div class="col-6 form-container d-flex allign-items-center justify-content-around p-1">
+            <form class="form-container" action="">
+                <fieldset>
+                    <input type="checkbox" name="" id="categorie1">
+                    <label for="categorie1">Category</label>
+                    <input type="checkbox" name="" id="categorie2">
+                    <label for="categorie2">Category</label>
+                    <input type="checkbox" name="" id="categorie3">
+                    <label for="categorie3">Category</label>
+                    <input type="checkbox" name="" id="categorie4">
+                    <label for="categorie4">Category</label>
+                </fieldset>
+            </form>
+        </div>
+        <div class="col-4">
+            <div class="">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
     </div>
-
-
-    <footer class="d-flex justify-content-start allign-items-center">                
+    <!--cards-->
+    <div class="container d-flex justify-content-around allign mt-4 mb-4">
+        <div class="card" style="width: 15rem;">
+            <img class="card-img-top" src="../img/Cinema.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Card subtitle</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div class="card" style="width: 15rem;">
+            <img class="card-img-top" src="../img/Costume_Party.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Card subtitle</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div class="card" style="width: 15rem;">
+            <img class="card-img-top" src="../img/Food_Fair.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Card subtitle</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div class="card" style="width: 15rem;">
+            <img class="card-img-top" src="../img/Music_Concert.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Card subtitle</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+    <footer class="d-flex justify-content-start allign-items-center">
         <a href="www.instagram.com"><i class="bi bi-instagram"></i></a>
         <a href="www.facebook.com"><i class="bi bi-facebook"></i></a>
-        <a href="www.whatsapp.com"><i class="bi bi-whatsapp"></i></a>        
+        <a href="www.whatsapp.com"><i class="bi bi-whatsapp"></i></a>
     </footer>
 
-    <script src="./assets/js/main.js"></script>
+    <!-- scripts -->    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
-    
 </body>
-
 </html>

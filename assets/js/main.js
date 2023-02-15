@@ -1,3 +1,4 @@
+
 /* ejercicios 1 al 6 
 let miNombre = "Lucas"
 let miApellido = "Ferreira"
