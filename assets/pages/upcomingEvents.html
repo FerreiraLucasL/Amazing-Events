@@ -13,24 +13,26 @@
     <title>Amazing Events</title>
 </head>
 
-<body>
-    <div class="row d-flex justify-content-around" id="nav">
-        <div class="col-2 " id="logo">
-            <img src="../img/logo.png" alt="logo">
-        </div>
-        <nav class="col-8 d-flex justify-content-center align-items-center" id="enlaces">
-            <a href="../../index.html">HOME</a>
-            <a href="upcomingEvents.html">Upcoming Events</a>
-            <a href="pastEvents.html">Past Events</a>
-            <a href="contact.html">Contact</a>
-            <a href="stats.html">Stats</a>
-        </nav>
+<body>    
+    <header class="header">
+    <div class="logo"><a href="../../index.html"><img src="../../assets/img/logo.png" alt="logo"></a></div>        
+    <nav class="navigation">
+        <input type="checkbox" class="toggle-menu"> 
+        <div class="hamburguer"></div>
+        <ul class="menu">
+            <li><a href="../../index.html">HOME</a></li>
+            <li><a href="upcomingEvents.html">Upcoming Events</a></li>
+            <li><a href="pastEvents.html">Past Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="stats.html">Stats</a></li>     
+        </ul>
+    </nav>
+</header>    
+<div class="banner">
+    <div class="container d-flex justify-content-center allign-items-center">
+        <h1>Upcoming Events</h1>
     </div>
-    <header>
-        <div class="container d-flex justify-content-center allign-items-center">
-            <h1>Upcoming Events</h1>
-        </div>
-    </header>
+</div>
     <!-- search y radios-->
     <div class="row d-flex-block m-3">
         <div class="col-6 form-container d-flex allign-items-center justify-content-around p-1">
@@ -50,8 +52,8 @@
         <div class="col-4">
             <div class="">
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"  style="background: #8E05C2">
+                    <button class="btn btn-primary" type="submit">Search</button>
                 </form>
             </div>
         </div>

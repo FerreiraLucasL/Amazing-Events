@@ -13,42 +13,43 @@
     <title>Amazing Events</title>
 </head>
 
-<body>
-    <div class="row d-flex justify-content-around" id="nav">
-        <div class="col-2 " id="logo">
-            <img src="../img/logo.png" alt="logo">
-        </div>        
-        <nav class="col-8 d-flex justify-content-center align-items-center" id="enlaces">
-            <a href="../../index.html">HOME</a>
-            <a href="upcomingEvents.html">Upcoming Events</a>
-            <a href="pastEvents.html">Past Events</a>
-            <a href="contact.html">Contact</a>
-            <a href="stats.html">Stats</a>
-        </nav>
+<header class="header">
+    <div class="logo"><a href="../../index.html"><img src="../../assets/img/logo.png" alt="logo"></a></div>        
+    <nav class="navigation">
+        <input type="checkbox" class="toggle-menu"> 
+        <div class="hamburguer"></div>
+        <ul class="menu">
+            <li><a href="../../index.html">HOME</a></li>
+            <li><a href="upcomingEvents.html">Upcoming Events</a></li>
+            <li><a href="pastEvents.html">Past Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="stats.html">Stats</a></li>     
+        </ul>
+    </nav>
+</header>    
+<div class="banner">
+    <div class="container d-flex justify-content-center allign-items-center">
+        <h1>Contact</h1>
     </div>
-    <header>
-        <div class="container d-flex justify-content-center allign-items-center">
-            <h1>Contact</h1>
-        </div>
-    </header>
+</div>
 
     <!-- parecerá tonto pero no logré separar mas los inputs y labels entre sí -->    
 
     <section>
-        <div class="container p-4 m-4">
+        <div class="container p-2 m-2">
             <h4>Contacto</h4>
             <form action="" class="m-4">
                 <fieldset>                    
                 <label for="name">Name</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="ingrese su nombre">
+                <input type="text" class="form-control" name="name" id="name" placeholder="Ingrese su nombre" style="background: #8E05C2">
                 <label for="lname">Last Name</label>
-                <input type="text" class="form-control" name="lname" id="lname" placeholder="ingrese su apellido">
+                <input type="text" class="form-control" name="lname" id="lname" placeholder="Ingrese su apellido" style="background: #8E05C2">
                 <label for="email">Correo</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="ingrese su email">                       
-                <textarea name="message" id="" cols="30" rows="5" placeholder="put your message here"></textarea>            
+                <input type="email" class="form-control" name="email" id="email" placeholder="Ingrese su email" style="background: #8E05C2">                       
+                <textarea name="message" id="" cols="30" rows="5" placeholder="put your message here" style="background: #8E05C2"></textarea>            
             </fieldset>
             <fieldset class="">
-                <input type="submit" value="submit" class="button" maxlength="100px">
+                <input type="submit" value="submit" class="btn btn-primary" maxlength="100px">
             </fieldset>
             </form>            
         </div>
