@@ -5,7 +5,7 @@
     box-sizing: border-box;            
 }
 body,.card{
-    background: #8E05C2;
+    background: #E9A6A6;
 }
 .header {
     position: relative;
@@ -91,10 +91,14 @@ body,.card{
 footer{
     background-color: black;
     width: 100%;
-    position: fixed;
+    height: 100px;    
+    position: relative;
     bottom: 0;
 }
-
+.card{
+    width: 15rem;
+    margin: 1rem 1rem 1rem 1rem;
+}
 footer>a{        
     font-size: 1.5rem;      
     margin: 1rem 1rem 1rem 1rem;
@@ -129,6 +133,7 @@ table,td{
 .navigation input:checked ~ .menu{
     right: 0;
 }
+
 
 @media (max-width:767.98px){
     .header {
