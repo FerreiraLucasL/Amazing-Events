@@ -162,8 +162,8 @@ table,td{
         width: 100%;
     }
     footer{
-    position: fixed;
-    bottom: 0;
+        position: relative;
+        bottom: 0;
     }
     .card{
         position: static;

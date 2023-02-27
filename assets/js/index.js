@@ -208,7 +208,7 @@ function createModals(event[mostrarModal],modalBody){
             <p class="card-text">${event.capacity}</p>
             <p class="card-text">${event.assistance}</p>
             <p class="card-text">${event.price}</p>
-        `                
+        `
 }
 createModals(events,modalBody);
 */
