@@ -3,25 +3,33 @@ import data from './data.js'
 let events = data.events
 const cards = document.getElementById("cards");
 
-
 //imprimir cartas
 function createCards(events, cards) {
     cards.innerHTML = ""
-    for(let event of events) {
+    if(events.length > 0) {
+        for(let event of events) {
+            let div = document.createElement("div");
+            div.className = "card";
+            div.innerHTML += ` 
+                <img class="card-img-top" src="${event.image}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">${event.name}</h5>
+                    <p class="card-text">${event.place}</p>
+                    <p class="card-text">${event.date}</p>
+                    <p class="card-text">${event.category}</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" id="${event.id}">Details</button>
+                </div>
+            `
+            cards.appendChild(div)
+        }
+    }else{
         let div = document.createElement("div");
-        div.className = "card";
+        div.className = "sinResultados";
         div.innerHTML += ` 
-            <img class="card-img-top" src="${event.image}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">${event.name}</h5>
-                <p class="card-text">${event.place}</p>
-                <p class="card-text">${event.date}</p>
-                <p class="card-text">${event.category}</p>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">Details</button>
-            </div>
+        <h5 class="card-title">Sin Resultados</h5>
         `
-        cards.appendChild(div)                
-    }    
+        cards.appendChild(div)
+    }
 }
 createCards(events, cards)
 
@@ -52,26 +60,31 @@ const createCatsChecks = (array, catsChecks) => {
         let div = document.createElement("div")
         div.className = `checksCategory ${category}`
         div.innerHTML = `
-        <input type="checkbox" id=${category} name="category"/>
-        <label for="${category}">${category}</label>
+        <input type="checkbox" id=${category.replace(/\s+/g,'')} name="${category}"/>
+        <label for="${category.replace(/\s+/g,'')}">${category}</label>
         `        
         catsChecks.appendChild(div)
     })
 }
-//categories.push("todos")
+//categories.push("todos") deprecado :v
 createCatsChecks(categories, catsChecks)
 
 //filtrado por categorias
 const filterChecks = (array) => {
-    let checked = document.querySelector('input[type=checkbox]:checked');    
-    let filteredArray = array.filter(element => element.category.toLowerCase().includes(checked.id))
+    let checked = []
+    checked = document.querySelector('input[type=checkbox]:checked');
+    if (checked==null){
+        checked=""
+    }
+    console.log(checked)
+    let filteredArray = array.filter(element => element.category.toLowerCase().includes(checked.name))
     return filteredArray
 }
-
 catsChecks.addEventListener('change', () =>{
     let catsFilter = filterChecks(events)
     createCards(catsFilter, cards)
 })
+
 
 //busqueda por nombre
 const filterSearch = (array, value) => {
@@ -80,10 +93,9 @@ const filterSearch = (array, value) => {
 }
 
 const $search = document.getElementById("search")
-$search.addEventListener('keyup', (e) => {
-    let eventFilter = filterSearch(events, e.target.value)
-    console.log(e.target.value)
-    createCards(eventFilter, cards)
+$search.addEventListener('keyup', () => {
+    let eventFilter = filterSearch(filterChecks(events), $search.value)
+    createCards(eventFilter, cards)    
 })
 
-
+//details
