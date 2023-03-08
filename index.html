@@ -31,27 +31,19 @@
             <h1>HOME</h1>
         </div>
     </div>
-    <!-- search y radios-->
-    <div class="row d-flex-block m-3" id="searchBar">
-        <div class="col-6 form-container d-flex allign-items-center justify-content-around p-1">
-            <form class="form-container" action="">
-                <fieldset>
-                    <input type="checkbox" name="category" id="categorie1">
-                    <label for="categorie1">Category</label>
-                    <input type="checkbox" name="category" id="categorie2">
-                    <label for="categorie2">Category</label>
-                    <input type="checkbox" name="category" id="categorie3">
-                    <label for="categorie3">Category</label>
-                    <input type="checkbox" name="category" id="categorie4">
-                    <label for="categorie4">Category</label>
-                </fieldset>
+    <!-- search and radios-->
+    <div class="d-flex allign-items-center justify-content-around" id="searchBar">
+        <div class="form-container">
+            <form class="form-container">
+                <div id="categories">
+                            <!-- contenido generado en el js -->
+                </div>
             </form>
         </div>
         <div class="col-4">
             <div>
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="background: #E9A6A6">
-                    <button class="btn btn-primary" type="submit">Search</button>
+                    <input class="form-control me-2" type="search" placeholder="search" aria-label="Search" id="search" style="background: #E9A6A6">                    
                 </form>
             </div>
         </div>
@@ -68,11 +60,11 @@
     </footer>
  
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Details</h5>
+            <h5 class="modal-title" id="modalLabel">Details</h5>
         </div>
         <div class="modal-body" id="modal-body">
             <!-- contenido generado en el js -->
