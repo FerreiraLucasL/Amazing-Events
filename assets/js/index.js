@@ -3,9 +3,11 @@ import data from './data.js'
 let events = data.events
 const cards = document.getElementById("cards");
 
+
 //imprimir cartas
 function createCards(events, cards) {
     cards.innerHTML = ""
+    //caso de no haber nada que imprimir avisar al usuario
     if(events.length > 0) {
         for(let event of events) {
             let div = document.createElement("div");
@@ -17,7 +19,7 @@ function createCards(events, cards) {
                     <p class="card-text">${event.place}</p>
                     <p class="card-text">${event.date}</p>
                     <p class="card-text">${event.category}</p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" id="${event.id}">Details</button>
+                    <button type="button" name="detailsButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" id="${event._id}">Details</button>
                 </div>
             `
             cards.appendChild(div)
@@ -53,12 +55,12 @@ const eliminarRepetidos = (array) => {
 }
 categories = eliminarRepetidos(allCategories)
 
-//checkbocks categorias
+//imprimir checkbox's categorias
 const catsChecks = document.getElementById("categories");
 const createCatsChecks = (array, catsChecks) => {
     array.forEach(category =>{
         let div = document.createElement("div")
-        div.className = `checksCategory ${category}`
+        div.className = `${category.replace(/\s+/g,'')}`
         div.innerHTML = `
         <input type="checkbox" id=${category.replace(/\s+/g,'')} name="${category}"/>
         <label for="${category.replace(/\s+/g,'')}">${category}</label>
@@ -66,25 +68,45 @@ const createCatsChecks = (array, catsChecks) => {
         catsChecks.appendChild(div)
     })
 }
-//categories.push("todos") deprecado :v
+//categories.push("todos")
 createCatsChecks(categories, catsChecks)
 
-//filtrado por categorias
-const filterChecks = (array) => {
-    let checked = []
-    checked = document.querySelector('input[type=checkbox]:checked');
-    if (checked==null){
-        checked=""
-    }
-    console.log(checked)
-    let filteredArray = array.filter(element => element.category.toLowerCase().includes(checked.name))
-    return filteredArray
+//checkboxs filter
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+const filtrarCheckboxs = () => {
+    let estadoCheckboxes = [];
+    checkboxes.forEach((checkbox) => {
+        if ((checkbox.name!=="")&&(checkbox.checked==true)) {
+            estadoCheckboxes.push({
+            name: checkbox.name.replace(/\s+/g,'')
+    });}
+    });
+    return estadoCheckboxes
 }
-catsChecks.addEventListener('change', () =>{
-    let catsFilter = filterChecks(events)
-    createCards(catsFilter, cards)
-})
 
+//filtrar eventos x categorias
+const eventsByCategory = (array) => {
+    let eventoses = []
+    events.forEach((event) => {
+        filtrarCheckboxs().forEach((checkbox) => {
+        if((event.category.toLocaleLowerCase().replace(/\s+/g,''))==checkbox.name){            
+            eventoses.push(event)}
+        })
+    })
+    if(eventoses.length>0){
+        return eventoses    
+    }else{
+        eventoses = events
+        return eventoses  
+    }    
+}
+
+
+//change listener en el array de checkboxes
+catsChecks.addEventListener('change', () =>{
+    let eventsFiltrados = filterSearch(events, $search.value)
+    createCards(eventsByCategory(eventsFiltrados), cards)
+})
 
 //busqueda por nombre
 const filterSearch = (array, value) => {
@@ -92,10 +114,13 @@ const filterSearch = (array, value) => {
     return filteredArray
 }
 
+//serachBar listener
 const $search = document.getElementById("search")
 $search.addEventListener('keyup', () => {
-    let eventFilter = filterSearch(filterChecks(events), $search.value)
-    createCards(eventFilter, cards)    
+    let eventFilter = filterSearch(events, $search.value)
+    createCards(eventFilter, cards)
 })
 
 //details
+let detailsbutton = document.getElementsByName("detailsButton")
+console.log(detailsbutton)

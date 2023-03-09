@@ -99,6 +99,7 @@ footer{
 .card{
     width: 15rem;
     margin: 1rem 1rem 1rem 1rem;
+    position: relative;
 }
 footer>a{        
     font-size: 1.5rem;      
