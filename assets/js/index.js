@@ -3,7 +3,6 @@ import data from './data.js'
 let events = data.events
 const cards = document.getElementById("cards");
 
-
 //imprimir cartas
 function createCards(events, cards) {
     cards.innerHTML = ""
@@ -22,6 +21,39 @@ function createCards(events, cards) {
                     <button type="button" name="detailsButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" id="${event._id}">Details</button>
                 </div>
             `
+            
+      //listener botón "Details"
+      let detailsButton = div.querySelector('button');
+      detailsButton.addEventListener('click', () => {
+        //crear y mostrar el modal con los detalles del evento
+        let modal = document.createElement("div");
+        modal.className = "modal";
+        modal.innerHTML = `
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">${event.name}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="${event.image}" alt="Card image cap">
+                                <p>${event.description}</p>
+                                <p>${event.date}</p>
+                                <p>${event.place}</p>
+                                <p>${event.capacity}</p>
+                                <p>${event.assistance}</p>
+                                <p>${event.price}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+        document.body.appendChild(modal);
+        //el modal se elimina cuando el usuario lo cierra
+        let closeButton = modal.querySelector(".btn-close");
+        closeButton.addEventListener("click", () => {
+          document.body.removeChild(modal);
+        });
+      });
             cards.appendChild(div)
         }
     }else{
@@ -122,5 +154,3 @@ $search.addEventListener('keyup', () => {
 })
 
 //details
-let detailsbutton = document.getElementsByName("detailsButton")
-console.log(detailsbutton)
