@@ -1,22 +1,39 @@
-let urlApi = "./assets/js/amazing.json"
-let datos = []
+const urlApi = './assets/js/amazing.json'
+let events
+let cards = document.getElementById("cards")
+const $search = document.getElementById("search")
+const catsChecks = document.getElementById("categories")
+
+
 fetch(urlApi)
     .then(response => response.json())
     .then(data => {
-        let cards = document.getElementById("cards");
-        const catsChecks = document.getElementById("categories");
-        const $search = document.getElementById("search")
-        createCards(data.events)
-        //checkboxs
-        let categories = eliminarRepetidos(mapCategories(data.events))
-        createCatsChecks(categories, catsChecks)
+        events = data.events
+        let eventsFilter = events
+        createCards(eventsFilter, cards)
 
-        //filtrar eventos x categorias
+        //obtener categorias desde data, imprimir checkbox por categoria
+        let categories = eliminarRepetidos(mapCategories(events))
+        createCatsChecks(categories, catsChecks)
+        //obtener checkbox :checked
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]')
+        const filtrarCheckboxs = () => {
+            let statusCheckboxs = [];
+            checkboxes.forEach((checkbox) => {
+                if ((checkbox.name !== "") && (checkbox.checked == true)) {
+                    statusCheckboxs.push({
+                        name: checkbox.name.replace(/\s+/g, '')
+                    })
+                }
+            })
+            return statusCheckboxs
+        }
+
+//filtrar eventos x categorias x eventos filtrados por checkbox checkeds(redundante si 4am si)
         const eventsByCategory = (array) => {
             let eventoses = []
-            data.events.forEach((event) => {
-                console.log(event);
-                filtrarCheckboxs().forEach((checkbox) => {
+            array.forEach(event => {
+                filtrarCheckboxs().forEach(checkbox => {
                     if ((event.category.toLocaleLowerCase().replace(/\s+/g, '')) == checkbox.name) {
                         eventoses.push(event)
                     }
@@ -25,41 +42,28 @@ fetch(urlApi)
             if (eventoses.length > 0) {
                 return eventoses
             } else {
-                eventoses = data.events
+                eventoses = events
                 return eventoses
             }
-        }
-        //checkboxs filter
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        const filtrarCheckboxs = () => {
-            let estadoCheckboxes = [];
-            checkboxes.forEach((checkbox) => {
-                if ((checkbox.name !== "") && (checkbox.checked == true)) {
-                    estadoCheckboxes.push({
-                        name: checkbox.name.replace(/\s+/g, '')
-                    });
-                }
-            });
-            return estadoCheckboxes
         }
 
         //change listener en el array de checkboxes
         catsChecks.addEventListener('change', () => {
-            let eventsFiltrados = filterSearch(data.events, $search.value)
-            createCards(eventsByCategory(eventsFiltrados), cards)
+            eventsFilter = filterSearch(eventsByCategory(events), $search.value)
+            createCards(eventsFilter, cards)
+
         })
 
         //searchBar listener        
-        $search.addEventListener("keyup", () => {
-            let eventFilter = filterSearch(data.events, $search.value)
-            createCards(eventFilter, cards)
+        $search.addEventListener('keyup', () => {
+            eventsFilter = filterSearch(eventsByCategory(events), $search.value)
+            createCards(eventsFilter, cards)
         })
     })
     .catch(error => console.log(error))
-    
-//funciones grales
+
 //imprimir cartas
-const createCards = (events, cards) =>{
+const createCards = (events, cards) => {
     cards.innerHTML = ""
     //caso de no haber nada que imprimir avisar al usuario
     if (events.length > 0) {
@@ -88,13 +92,15 @@ const createCards = (events, cards) =>{
     }
 }
 
+
+
 //mapeo categorias (con repetidos)
-const mapCategories = (array) =>{
+const mapCategories = (array) => {
     return array.map(categories => categories.category.toLowerCase())
 }
 
 //filtro repetidos categorias
-const eliminarRepetidos = (array) =>{
+const eliminarRepetidos = (array) => {
     let arrayDevuelto
     arrayDevuelto = array.reduce((acc, elem) => {
         if (!acc.includes(elem)) {
@@ -106,7 +112,7 @@ const eliminarRepetidos = (array) =>{
 }
 
 //imprimir checkbox's categorias
-const createCatsChecks = (array, catsChecks) =>{
+const createCatsChecks = (array, catsChecks) => {
     array.forEach(category => {
         let div = document.createElement("div")
         div.className = `${category.replace(/\s+/g, '')}`
