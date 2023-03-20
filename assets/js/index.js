@@ -1,6 +1,5 @@
 const urlApi = './assets/js/amazing.json'
 let events
-let currentDate
 let cards = document.getElementById("cards")
 const $search = document.getElementById("search")
 const catsChecks = document.getElementById("categories")
@@ -94,8 +93,6 @@ const createCards = (events, cards) => {
         cards.appendChild(div)
     }
 }
-
-
 
 //mapeo categorias (con repetidos)
 const mapCategories = (array) => {

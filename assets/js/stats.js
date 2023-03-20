@@ -3,21 +3,18 @@ let events
 const tables = document.getElementById("tables")
 const tblBody = document.createElement("tbody");
 
-
-
 fetch(urlApi)
     .then(response => response.json())
     .then(data => {
         events = data.events
         let categories = eliminarRepetidos(mapCategories(events))
-        console.log(revenuesXcategoriesFunc(data))
         let table = document.createElement("table")
         crearTablaES(table, hpoaEventFunction(events), lpoaEventFunction(events), largerCapacityEvent(events))
         tables.appendChild(table)
         crearTablaUP(table, revenuesXcategoriesFunc(data), data.currentDate, categories)
-        
         tables.appendChild(table)
-
+        crearTablaPast(table, revenuesXcategoriesFunc(data), data.currentDate, categories)
+        tables.appendChild(table)
     })
     .catch(error => console.log(error))
 //highest porcentage of assistance event
@@ -81,6 +78,7 @@ const revenuesXcategoriesFunc = (array) => {
         } else {
             poa = ((e.assistance * 100) / e.capacity)
         }
+
         revenuesXcategorie = {
             "category": e.category,
             "revenue": revenue, // (e.price*e.assistance) por asistencia o estimado
@@ -89,6 +87,7 @@ const revenuesXcategoriesFunc = (array) => {
         }
         revenuesXcategories.push(revenuesXcategorie)
     })
+
     return (revenuesXcategories);
 }
 
@@ -162,49 +161,137 @@ const crearTablaES = (table, hpoa, lpoa, larger) => {
     `
 }
 
-const crearTablaUP = (table, array, currentDate, categories) => {    
+const crearTablaUP = (table, arrayEventos, currentDate, categories) => {
+    let arrayTotales = []
     let totalXcat = {
-        "category" : String,
-        "totalRevenue" : Number=0,
-        "totalPoa" : Number=0,
+        "category": String,
+        "totalRevenue": Number = 0,
+        "poa": Number = 0,
+        "npoa": Number = 0,
     }
-    let arrayTotalXCat = []
-    
-
-
-    table.innerHTML += `
-    <thead>      
+     
+    for(let cat = 0; cat < categories.length; cat++) {
+        let arrayTotalXCat = arrayEventos.filter(a => a.category === categories[cat])
+        arrayTotalXCat.forEach(a => {
+            if (a.date > currentDate) {
+                totalXcat.totalRevenue += a.revenue
+                totalXcat.poa += a.poa
+                totalXcat.npoa += 1
+            }
+        })
+        totalXcat.category = categories[cat]
+        totalXcat.poa = totalXcat.poa / totalXcat.npoa
+        arrayTotales.push(totalXcat)
+        totalXcat = {
+            "category": String,
+            "totalRevenue": Number = 0,
+            "poa": Number = 0,
+            "npoa": Number = 0,
+        }
+    }
+table.innerHTML += `
+    <thead>
         <tr>
             <th>Upcoming events statistics by category</th>
         </tr>
     </thead>
-    <tbody>                
+    <tbody>
         <tr>
         <td>
-            
+            Categories
         </td>
         <td>
-            
+            Revenues
         </td>
         <td>
-            
+            Percentage of attendence
         </td>
-        </tr>     
+        </tr>
     </tbody>
     `
-    // for lalala
-    table.innerHTML += `
-    <tbody>                
+arrayTotales.forEach(a => { 
+table.innerHTML += `
+    <tbody>
     <tr>
     <td>
-        Categories
+        ${a.category}
     </td>
     <td>
-        Revenues
+        ${a.totalRevenue}
     </td>
     <td>
-        Percentage of attendence
+        ${a.poa}
     </td>
-    </tr>     
+    </tr>
 </tbody>`
+})
+}
+
+
+
+
+const crearTablaPast = (table, arrayEventos, currentDate, categories) => {
+    let arrayTotales = []
+    let totalXcat = {
+        "category": String,
+        "totalRevenue": Number = 0,
+        "poa": Number = 0,
+        "npoa": Number = 0,
+    }
+     
+    for(let cat = 0; cat < categories.length; cat++) {
+        let arrayTotalXCat = arrayEventos.filter(a => a.category === categories[cat])
+        arrayTotalXCat.forEach(a => {
+            if (a.date < currentDate) {
+                totalXcat.totalRevenue += a.revenue
+                totalXcat.poa += a.poa
+                totalXcat.npoa += 1
+            }
+        })
+        totalXcat.category = categories[cat]
+        totalXcat.poa = totalXcat.poa / totalXcat.npoa
+        arrayTotales.push(totalXcat)
+        totalXcat = {
+            "category": String,
+            "totalRevenue": Number = 0,
+            "poa": Number = 0,
+            "npoa": Number = 0,
+        }
+    }
+table.innerHTML += `
+    <thead>
+        <tr>
+            <th>Past Events statistics by category</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <td>
+            Categories
+        </td>
+        <td>
+            Revenues
+        </td>
+        <td>
+            Percentage of attendence
+        </td>
+        </tr>
+    </tbody>
+    `
+arrayTotales.forEach(a => { 
+table.innerHTML += `
+    <tbody>
+    <tr>
+    <td>
+        ${a.category}
+    </td>
+    <td>
+        ${a.totalRevenue}
+    </td>
+    <td>
+        ${a.poa}
+    </td>
+    </tr>
+</tbody>`
+})
 }
