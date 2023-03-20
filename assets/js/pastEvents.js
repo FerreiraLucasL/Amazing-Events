@@ -1,63 +1,92 @@
-import data from './data.js'
+const urlApi = '../js/amazing.json'
+let events
+let currentDate
+let cards = document.getElementById("cards")
+const $search = document.getElementById("search")
+const catsChecks = document.getElementById("categories")
 
-let events = data.events
-const cards = document.getElementById("cards");
+
+fetch(urlApi)
+    .then(response => response.json())
+    .then(data => {
+        events = data.events
+        let eventsFilter = events
+        let currentDate=data.currentDate
+        createCards(eventsFilter, cards, currentDate)
+
+        //obtener categorias desde data, imprimir checkbox por categoria
+        let categories = eliminarRepetidos(mapCategories(events))
+        createCatsChecks(categories, catsChecks)
+        //obtener checkbox :checked
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]')
+        const filtrarCheckboxs = () => {
+            let statusCheckboxs = [];
+            checkboxes.forEach((checkbox) => {
+                if ((checkbox.name !== "") && (checkbox.checked == true)) {
+                    statusCheckboxs.push({
+                        name: checkbox.name.replace(/\s+/g, '')
+                    })
+                }
+            })
+            return statusCheckboxs
+        }
+
+//filtrar eventos x categorias x eventos filtrados por checkbox checkeds(redundante si 4am si)
+        const eventsByCategory = (array) => {
+            let eventoses = []
+            array.forEach(event => {
+                filtrarCheckboxs().forEach(checkbox => {
+                    if ((event.category.toLocaleLowerCase().replace(/\s+/g, '')) == checkbox.name) {
+                        eventoses.push(event)
+                    }
+                })
+            })
+            if (eventoses.length > 0) {
+                return eventoses
+            } else {
+                eventoses = events
+                return eventoses
+            }
+        }
+
+        //change listener en el array de checkboxes
+        catsChecks.addEventListener('change', () => {
+            eventsFilter = filterSearch(eventsByCategory(events), $search.value)
+            createCards(eventsFilter, cards, currentDate)
+
+        })
+
+        //searchBar listener        
+        $search.addEventListener('keyup', () => {
+            eventsFilter = filterSearch(eventsByCategory(events), $search.value)
+            createCards(eventsFilter, cards, currentDate)
+        })
+    })
+    .catch(error => console.log(error))
 
 //imprimir cartas
-function createCards(events, cards) {
+const createCards = (events, cards, currentDate) => {
     cards.innerHTML = ""
     //caso de no haber nada que imprimir avisar al usuario
     if (events.length > 0) {
         for (let event of events) {
-            if (event.date > data.currentDate) {
-                let div = document.createElement("div");
-                div.className = "card";
-                div.innerHTML += ` 
+            if(event.date < currentDate){
+            let div = document.createElement("div");
+            div.className = "card";
+            div.innerHTML += `
                 <img class="card-img-top" src="${event.image}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">${event.name}</h5>
                     <p class="card-text">${event.place}</p>
                     <p class="card-text">${event.date}</p>
                     <p class="card-text">${event.category}</p>
-                    <button type="button" name="detailsButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" id="${event._id}">Details</button>
+                    <a href="details.html?id=${event._id}">
+                        <button type="button" class="btn btn-primary">Details</button>
+                    </a>
                 </div>
             `
-
-                //listener botón "Details"
-                let detailsButton = div.querySelector('button');
-                detailsButton.addEventListener('click', () => {
-                    //crear y mostrar el modal con los detalles del evento
-                    let modal = document.createElement("div");
-                    modal.className = "modal";
-                    modal.innerHTML = `
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">${event.name}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <img src="${event.image}" alt="Card image cap">
-                                <p>${event.description}</p>
-                                <p>${event.date}</p>
-                                <p>${event.place}</p>
-                                <p>${event.capacity}</p>
-                                <p>${event.assistance}</p>
-                                <p>${event.price}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                    document.body.appendChild(modal);
-                    //el modal se elimina cuando el usuario lo cierra
-                    let closeButton = modal.querySelector(".btn-close");
-                    closeButton.addEventListener("click", () => {
-                        document.body.removeChild(modal);
-                    });
-                });
-                cards.appendChild(div)
-            }
-        }
+            cards.appendChild(div)
+        }}
     } else {
         let div = document.createElement("div");
         div.className = "sinResultados";
@@ -67,16 +96,15 @@ function createCards(events, cards) {
         cards.appendChild(div)
     }
 }
-createCards(events, cards)
+
+
 
 //mapeo categorias (con repetidos)
 const mapCategories = (array) => {
     return array.map(categories => categories.category.toLowerCase())
 }
-let allCategories = mapCategories(events)
 
 //filtro repetidos categorias
-let categories
 const eliminarRepetidos = (array) => {
     let arrayDevuelto
     arrayDevuelto = array.reduce((acc, elem) => {
@@ -87,10 +115,8 @@ const eliminarRepetidos = (array) => {
     }, [])
     return arrayDevuelto
 }
-categories = eliminarRepetidos(allCategories)
 
 //imprimir checkbox's categorias
-const catsChecks = document.getElementById("categories");
 const createCatsChecks = (array, catsChecks) => {
     array.forEach(category => {
         let div = document.createElement("div")
@@ -102,57 +128,9 @@ const createCatsChecks = (array, catsChecks) => {
         catsChecks.appendChild(div)
     })
 }
-//categories.push("todos")
-createCatsChecks(categories, catsChecks)
-
-//checkboxs filter
-const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-const filtrarCheckboxs = () => {
-    let estadoCheckboxes = [];
-    checkboxes.forEach((checkbox) => {
-        if ((checkbox.name !== "") && (checkbox.checked == true)) {
-            estadoCheckboxes.push({
-                name: checkbox.name.replace(/\s+/g, '')
-            });
-        }
-    });
-    return estadoCheckboxes
-}
-
-//filtrar eventos x categorias
-const eventsByCategory = (array) => {
-    let eventoses = []
-    events.forEach((event) => {
-        filtrarCheckboxs().forEach((checkbox) => {
-            if ((event.category.toLocaleLowerCase().replace(/\s+/g, '')) == checkbox.name) {
-                eventoses.push(event)
-            }
-        })
-    })
-    if (eventoses.length > 0) {
-        return eventoses
-    } else {
-        eventoses = events
-        return eventoses
-    }
-}
-
-
-//change listener en el array de checkboxes
-catsChecks.addEventListener('change', () => {
-    let eventsFiltrados = filterSearch(events, $search.value)
-    createCards(eventsByCategory(eventsFiltrados), cards)
-})
 
 //busqueda por nombre
 const filterSearch = (array, value) => {
     let filteredArray = array.filter(element => (element.name.toLowerCase().includes(value.toLowerCase())))
     return filteredArray
 }
-
-//serachBar listener
-const $search = document.getElementById("search")
-$search.addEventListener('keyup', () => {
-    let eventFilter = filterSearch(events, $search.value)
-    createCards(eventFilter, cards)
-})

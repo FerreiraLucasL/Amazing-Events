@@ -1,5 +1,6 @@
 const urlApi = './assets/js/amazing.json'
 let events
+let currentDate
 let cards = document.getElementById("cards")
 const $search = document.getElementById("search")
 const catsChecks = document.getElementById("categories")
@@ -77,7 +78,9 @@ const createCards = (events, cards) => {
                     <p class="card-text">${event.place}</p>
                     <p class="card-text">${event.date}</p>
                     <p class="card-text">${event.category}</p>
-                    <button type="button" name="detailsButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" id="${event._id}">Details</button>
+                    <a href="./assets/pages/details.html?id=${event._id}">
+                        <button type="button" class="btn btn-primary">Details</button>
+                    </a>
                 </div>
             `
             cards.appendChild(div)
